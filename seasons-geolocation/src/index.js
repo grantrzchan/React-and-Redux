@@ -16,19 +16,30 @@ class App extends React.Component {
         //always call super(props) first
         super(props);
             // We ONLY do direct assign of this.state in the constructor function
-        this.state = {latitude: null};
+        this.state = {latitude: null, errorMessage: ''};
         window.navigator.geolocation.getCurrentPosition(
                 //we call setState to update the state
-            position => this.setState({latitude: position.coords.latitude}),
+            position => {this.setState({latitude: position.coords.latitude});
+        },
             // DO NOT do this.
                //this.state.latitude = position.coords.latitude; 
-            err => console.log(err)
+            err => {this.setState({ errorMessage: err.message })}
         );
     }
 
     render(){
         //use browser to get location
-        return <div>Latitude: {this.state.latitude}</div>;
+        if(this.state.errorMessage && !this.state.latitude){
+            return (<div>
+                Error: {this.state.errorMessage}
+                </div>);}
+        else if(!this.state.errorMessage && this.state.latitude){
+            return ( <div> 
+                        Latitude: {this.state.latitude}
+                    </div>);
+        }else{
+            return(<div>Loading!</div>);
+        };
     };
 }
 
