@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import SeasonsDisplay from "./SeasonsDisplay";
 
 //when we create a class, render is originally
 // the only method in it, and is also the main method.
@@ -34,9 +35,9 @@ class App extends React.Component {
                 Error: {this.state.errorMessage}
                 </div>);}
         else if(!this.state.errorMessage && this.state.latitude){
-            return ( <div> 
-                        Latitude: {this.state.latitude}
-                    </div>);
+                    // taking a property from the state in the App
+                    //component, passing it as a prop in SeasonsDisplay
+            return ( <SeasonsDisplay latitude={this.state.latitude}/>);
         }else{
             return(<div>Loading!</div>);
         };
